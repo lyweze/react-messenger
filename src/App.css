@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 body {
@@ -92,7 +93,7 @@ body {
 .chat-list {
   flex: 1;
   overflow-y: auto;
-  padding: 10px 0;
+  /* padding: 10px 0; */
 }
 
 .chat-item {

@@ -80,8 +80,6 @@ const initialMessages = {
 	],
 };
 
-// Главный компонент приложения
-
 function App() {
 	const [activeChat, setActiveChat] = useState(0);
 	const [messages, setMessages] = useState(initialMessages);
@@ -145,8 +143,3 @@ function App() {
 }
 
 export default App;
-
-// document.addEventListener("DOMContentLoaded", function () {
-// 	const rootElement = document.getElementById("root");
-// 	ReactDOM.render(React.createElement(App), rootElement);
-// });
