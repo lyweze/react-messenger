@@ -12,76 +12,9 @@ function ChatArea({
 }) {
 	const currentChat = chats[activeChat];
 	const currentMessages = messages[activeChat] || [];
-
-	const initialMessages = {
-		0: [
-			{ id: 1, text: "Привет! Как дела?", sent: false, time: "10:30" },
-			{
-				id: 2,
-				text: "Привет! Все хорошо, спасибо. Что нового?",
-				sent: true,
-				time: "10:32",
-			},
-			{
-				id: 3,
-				text: "Ничего особенного. Просто проверяю новый мессенджер.",
-				sent: false,
-				time: "10:33",
-			},
-			{
-				id: 4,
-				text: "Выглядит отлично! Очень похоже на iOS Telegram.",
-				sent: true,
-				time: "10:35",
-			},
-		],
-		1: [
-			{
-				id: 1,
-				text: "Привет! Встречаемся сегодня в 18:00?",
-				sent: false,
-				time: "09:15",
-			},
-			{ id: 2, text: "Да, конечно! Буду ждать.", sent: true, time: "09:20" },
-		],
-		2: [
-			{
-				id: 1,
-				text: "Доброе утро! Не забудь документы на встречу.",
-				sent: false,
-				time: "08:45",
-			},
-			{ id: 2, text: "Спасибо за напоминание!", sent: true, time: "08:50" },
-		],
-	};
-
-	const [setMessages] = useState(initialMessages);
-	const [setNewMessage] = useState("");
-
-	const handleMessageChange = (e) => {
-		setNewMessage(e.target.value);
-	};
-
-	const handleSendMessage = () => {
-		if (newMessage.trim() === "") return;
-
-		const currentMessages = messages[activeChat] || [];
-		const newMessageObj = {
-			id: currentMessages.length + 1,
-			text: newMessage,
-			sent: true,
-			time: new Date().toLocaleTimeString([], {
-				hour: "2-digit",
-				minute: "2-digit",
-			}),
-		};
-
-		setMessages({
-			...messages,
-			[activeChat]: [...currentMessages, newMessageObj],
-		});
-		setNewMessage("");
-	};
+	if (!currentChat) {
+		return <div className="chat-area">Выберите чат для начала общения</div>;
+	}
 
 	return (
 		<div className="chat-area">
@@ -107,7 +40,7 @@ function ChatArea({
 				))}
 			</div>
 			<div className="input-area">
-				<div className="input-container">
+				<div className={"input-container"}>
 					<div className="input-actions">
 						<button>
 							<i className="far fa-smile"></i>
@@ -116,12 +49,14 @@ function ChatArea({
 							<i className="fas fa-paperclip"></i>
 						</button>
 					</div>
-					<textarea
+					<input
+						name="message-input"
+						type="text"
 						className="message-input"
 						placeholder="Сообщение..."
 						value={newMessage}
 						onChange={onMessageChange}
-						onKeyPress={onKeyPress}
+						onKeyDown={onKeyPress}
 						rows={1}
 					/>
 				</div>

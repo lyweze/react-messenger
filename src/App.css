@@ -164,11 +164,11 @@ body {
   font-size: 11px;
 }
 
-.chat-item.active .chat-time,
 .chat-item.active .unread-badge {
   color: white;
   background: rgba(255, 255, 255, 0.3);
-}/* Main Chat Area */
+}
+/* Main Chat Area */
 .chat-area {
   flex: 1;
   display: flex;
