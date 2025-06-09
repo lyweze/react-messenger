@@ -176,6 +176,13 @@ body {
   background: linear-gradient(180deg, #1c1c1e 0%, #2a2a2e 30%, #1c1c1e 70%, #2a2a2e 100%);
 }
 
+.chat-undefined-text {
+  color: #8E8E93;
+  font-size: 16px;
+  text-align: center;
+  margin-top: 20px;
+}
+
 .chat-header {
   padding: 20px;
   background: linear-gradient(135deg, #3a3a3c, #5856D6, #48484a);

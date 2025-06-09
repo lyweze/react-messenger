@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Message from "../Message/Message"; // Assuming Message is a separate component
 
 function ChatArea({
@@ -12,8 +12,13 @@ function ChatArea({
 }) {
 	const currentChat = chats[activeChat];
 	const currentMessages = messages[activeChat] || [];
+
 	if (!currentChat) {
-		return <div className="chat-area">Выберите чат для начала общения</div>;
+		return (
+			<div className="chat-area">
+				<p className="chat-undefined-text">Выберите чат для начала общения</p>
+			</div>
+		);
 	}
 
 	return (
@@ -28,17 +33,14 @@ function ChatArea({
 						</div>
 					</div>
 				</div>
-				<div className="chat-actions">
-					<button>
-						<i className="fas fa-info-circle"></i>
-					</button>
-				</div>
 			</div>
+
 			<div className="messages-container">
 				{currentMessages.map((message) => (
 					<Message key={message.id} message={message} />
 				))}
 			</div>
+
 			<div className="input-area">
 				<div className={"input-container"}>
 					<div className="input-actions">

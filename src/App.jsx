@@ -3,18 +3,11 @@ import "./App.css";
 
 import ChatList from "./components/ChatList/ChatList";
 import ChatArea from "./components/ChatArea/ChatArea";
+import Auth from "./components/Auth-page/Auth";
 
 const chats = [
 	{
 		id: 0,
-		name: "Анна Петрова",
-		lastMessage: "",
-		time: "10:35",
-		unread: 0,
-		online: false,
-	},
-	{
-		id: 1,
 		name: "Анна Петрова",
 		lastMessage: "",
 		time: "10:35",
@@ -44,15 +37,6 @@ const initialMessages = {
 			sent: true,
 			time: "10:35",
 		},
-	],
-	1: [
-		{
-			id: 1,
-			text: "Привет! Встречаемся сегодня в 18:00?",
-			sent: false,
-			time: "09:15",
-		},
-		{ id: 2, text: "Да, конечно! Буду ждать.", sent: true, time: "09:20" },
 	],
 };
 
@@ -98,24 +82,38 @@ function App() {
 		}
 	};
 
-	return (
-		<div className="messenger-container">
-			<ChatList
-				chats={chats}
-				activeChat={activeChat}
-				onChatSelect={handleChatSelect}
-			/>
-			<ChatArea
-				activeChat={activeChat}
-				chats={chats}
-				messages={messages}
-				newMessage={newMessage}
-				onMessageChange={handleMessageChange}
-				onSendMessage={handleSendMessage}
-				onKeyPress={handleKeyPress}
-			/>
-		</div>
-	);
+	let isLogin = localStorage.getItem("isLogin") === "true";
+
+	switch (isLogin) {
+		case true:
+			console.log("Пользователь авторизован");
+			return (
+				<div className="messenger-container">
+					<ChatList
+						chats={chats}
+						activeChat={activeChat}
+						onChatSelect={handleChatSelect}
+					/>
+					<ChatArea
+						activeChat={activeChat}
+						chats={chats}
+						messages={messages}
+						newMessage={newMessage}
+						onMessageChange={handleMessageChange}
+						onSendMessage={handleSendMessage}
+						onKeyPress={handleKeyPress}
+					/>
+				</div>
+			);
+			break;
+		case false:
+			console.log("Пользователь не авторизован");
+			return <Auth />;
+			break;
+		default:
+			console.log("Неизвестный статус авторизации");
+			return <Auth />;
+	}
 }
 
 export default App;
