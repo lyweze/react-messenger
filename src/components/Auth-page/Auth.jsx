@@ -1,19 +1,18 @@
 import React from "react";
 import "./Auth.css";
 
-("use strict");
-
 const LoginForm = ({ onToggleForm }) => {
 	return (
 		<div className="auth-form">
 			<h2 className="auth-title">Вход</h2>
+
 			<div className="form-group">
-				<label htmlFor="login-phone">Телефон</label>
+				<label htmlFor="login-name">Имя</label>
 				<input
-					type="tel"
-					id="login-phone"
+					type="text"
+					id="login-name"
 					className="auth-input"
-					placeholder="+7 (___) ___-__-__"
+					placeholder="Ваше имя"
 				/>
 			</div>
 			<div className="form-group">
@@ -29,12 +28,13 @@ const LoginForm = ({ onToggleForm }) => {
 				className="auth-button"
 				onClick={() => {
 					alert("Вход выполнен");
-					localStorage.setItem("isLogin", "true");
+					localStorage.setItem("isLogin", "false");
 					window.location.reload();
 				}}
 			>
 				ВОЙТИ
 			</button>
+
 			<div className="form-footer">
 				<span>Нет аккаунта? </span>
 				<a
@@ -52,10 +52,11 @@ const LoginForm = ({ onToggleForm }) => {
 	);
 };
 
-const RegisterForm = ({ onToggleForm }) => {
+const RegisterForm = ({ onToggleForm, onKeyPress }) => {
 	return (
 		<div className="auth-form">
 			<h2 className="auth-title">Регистрация</h2>
+
 			<div className="form-group">
 				<label htmlFor="register-name">Имя</label>
 				<input
@@ -66,12 +67,12 @@ const RegisterForm = ({ onToggleForm }) => {
 				/>
 			</div>
 			<div className="form-group">
-				<label htmlFor="register-phone">Телефон</label>
+				<label htmlFor="register-email">Почта</label>
 				<input
-					type="tel"
-					id="register-phone"
+					type="email"
+					id="register-email"
 					className="auth-input"
-					placeholder="+7 (___) ___-__-__"
+					placeholder="Введите вашу почту"
 				/>
 			</div>
 			<div className="form-group">
@@ -94,10 +95,15 @@ const RegisterForm = ({ onToggleForm }) => {
 			</div>
 			<button
 				className="auth-button"
-				onClick={() => alert("Регистрация выполнена")}
+				onClick={() => {
+					alert("Регистрация выполнена");
+					localStorage.setItem("isLogin", "false");
+					window.location.reload();
+				}}
 			>
 				ЗАРЕГИСТРИРОВАТЬСЯ
 			</button>
+
 			<div className="form-footer">
 				<span>Уже есть аккаунт? </span>
 				<a
@@ -125,9 +131,6 @@ const Auth = () => {
 	return (
 		<div className="auth-container">
 			<div className="auth-card">
-				<div className="auth-header">
-					<h1 className="auth-brand">Аутентификация</h1>
-				</div>
 				{isLogin ? (
 					<LoginForm onToggleForm={toggleForm} />
 				) : (

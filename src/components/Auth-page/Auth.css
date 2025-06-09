@@ -1,205 +1,213 @@
-/* Стили для страницы авторизации */
 .auth-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100%;
-  background: linear-gradient(135deg, #1a2a38 0%, #2c3e50 25%, #34495e 50%, #2c3e50 75%, #1a2a38 100%);
-  background-size: 400% 400%;
-  animation: gradientBG 15s ease infinite;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	width: 100%;
+	background: linear-gradient(
+		135deg,
+		#1a2a38 0%,
+		#2c3e50 25%,
+		#34495e 50%,
+		#2c3e50 75%,
+		#1a2a38 100%
+	);
+	background-size: 400% 400%;
+	animation: gradientBG 15s ease infinite;
 }
 
 @keyframes gradientBG {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
 }
 
 .auth-card {
-  width: 100%;
-  max-width: 450px;
-  background: linear-gradient(145deg, rgba(30, 30, 30, 0.98) 0%, rgba(45, 45, 50, 0.95) 50%, rgba(30, 30, 30, 0.98) 100%);
-  border-radius: 20px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  overflow: hidden;
-  color: #ffffff;
-  backdrop-filter: blur(20px);
-  transition: all 0.3s ease;
+	width: 100%;
+	max-width: 450px;
+	background: linear-gradient(
+		145deg,
+		rgba(30, 30, 30, 0.98) 0%,
+		rgba(45, 45, 50, 0.95) 50%,
+		rgba(30, 30, 30, 0.98) 100%
+	);
+	border-radius: 20px;
+	box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+	overflow: hidden;
+	color: #ffffff;
+	backdrop-filter: blur(20px);
+	transition: all 0.3s ease;
 }
 
 .auth-header {
-  background: linear-gradient(135deg, #3a3a3c, #5856D6, #48484a);
-  background-size: 200% 200%;
-  animation: headerGradient 8s ease infinite;
-  padding: 30px 20px;
-  text-align: center;
-  border-radius: 20px 20px 0 0;
+	background: linear-gradient(135deg, #3a3a3c, #5856d6, #48484a);
+	background-size: 200% 200%;
+	animation: headerGradient 8s ease infinite;
+	padding: 30px 20px;
+	text-align: center;
+	border-radius: 20px 20px 0 0;
 }
 
 @keyframes headerGradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
 }
 
 .auth-logo {
-  font-size: 50px;
-  color: #ffffff;
-  margin-bottom: 10px;
+	font-size: 50px;
+	color: #ffffff;
+	margin-bottom: 10px;
 }
 
 .auth-brand {
-  font-size: 28px;
-  font-weight: 600;
-  color: #ffffff;
-  margin: 0;
+	font-size: 28px;
+	font-weight: 600;
+	color: #ffffff;
+	margin: 0;
 }
 
 .auth-form {
-  padding: 30px 40px;
+	padding: 30px 40px;
 }
 
 .auth-title {
-  margin-bottom: 25px;
-  font-size: 24px;
-  font-weight: 500;
-  text-align: center;
-  color: #ffffff;
+	margin-bottom: 25px;
+	font-size: 24px;
+	font-weight: 600;
+	text-align: center;
+	color: #ffffff;
 }
 
 .form-group {
-  margin-bottom: 20px;
+	margin-bottom: 20px;
 }
 
 .form-group label {
-  display: block;
-  margin-bottom: 8px;
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.8);
+	display: block;
+	margin-bottom: 8px;
+	font-size: 14px;
+	color: rgba(255, 255, 255, 0.8);
 }
 
 .auth-input {
-  width: 100%;
-  padding: 12px 15px;
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  color: #ffffff;
-  font-size: 16px;
-  transition: all 0.3s ease;
-  outline: none;
+	width: 100%;
+	padding: 12px 15px;
+	background: rgba(0, 0, 0, 0.2);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 10px;
+	color: #ffffff;
+	font-size: 16px;
+	transition: all 0.3s ease;
+	outline: none;
 }
 
 .auth-input:focus {
-  border-color: #5856D6;
-  box-shadow: 0 0 0 2px rgba(88, 86, 214, 0.3);
+	border-color: #5856d6;
+	box-shadow: 0 0 0 2px rgba(88, 86, 214, 0.3);
 }
 
 .auth-button {
-  width: 100%;
-  padding: 14px;
-  margin-top: 20px;
-  background: linear-gradient(135deg, #007AFF, #5856D6);
-  border: none;
-  border-radius: 10px;
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition: all 0.3s ease;
+	width: 100%;
+	padding: 14px;
+	margin-top: 20px;
+	background: linear-gradient(135deg, #007aff, #5856d6);
+	border: none;
+	border-radius: 10px;
+	color: #ffffff;
+	font-size: 16px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	cursor: pointer;
+	transition: all 0.3s ease;
 }
 
 .auth-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+	transform: translateY(-2px);
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .auth-button:active {
-  transform: translateY(0);
+	transform: translateY(0);
 }
 
 .form-footer {
-  margin-top: 25px;
-  text-align: center;
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.7);
+	margin-top: 25px;
+	text-align: center;
+	font-size: 14px;
+	color: rgba(255, 255, 255, 0.7);
 }
 
 .form-link {
-  color: #007AFF;
-  text-decoration: none;
-  font-weight: 500;
-  transition: all 0.3s ease;
+	color: #007aff;
+	text-decoration: none;
+	font-weight: 500;
+	transition: all 0.3s ease;
 }
 
 .form-link:hover {
-  color: #5856D6;
-  text-decoration: underline;
+	color: #5856d6;
+	text-decoration: underline;
 }
 
-/* Анимация появления форм */
 .auth-form {
-  animation: fadeIn 0.5s ease;
+	animation: fadeIn 0.5s ease;
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 
-/* Адаптивность */
 @media (max-width: 500px) {
-  .auth-card {
-    width: 95%;
-    margin: 0 10px;
-  }
-  
-  .auth-form {
-    padding: 20px;
-  }
+	.auth-card {
+		width: 95%;
+		margin: 0 10px;
+	}
+
+	.auth-form {
+		padding: 20px;
+	}
 }
 
-/* Стили для мобильных устройств */
 @media (max-width: 360px) {
-  .auth-header {
-    padding: 20px 15px;
-  }
-  
-  .auth-logo {
-    font-size: 40px;
-  }
-  
-  .auth-brand {
-    font-size: 22px;
-  }
-  
-  .auth-form {
-    padding: 15px;
-  }
-  
-  .auth-button {
-    padding: 12px;
-    font-size: 14px;
-  }
+	.auth-header {
+		padding: 20px 15px;
+	}
+
+	.auth-logo {
+		font-size: 40px;
+	}
+
+	.auth-brand {
+		font-size: 22px;
+	}
+
+	.auth-form {
+		padding: 15px;
+	}
+
+	.auth-button {
+		padding: 12px;
+		font-size: 14px;
+	}
 }

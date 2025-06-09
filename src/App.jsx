@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import "./App.css";
+import { memo } from "react";
 
 import ChatList from "./components/ChatList/ChatList";
 import ChatArea from "./components/ChatArea/ChatArea";
@@ -40,7 +41,14 @@ const initialMessages = {
 	],
 };
 
+// let isLogin = localStorage.getItem("isLogin") === "true";
+let isLogin = false; // Замените на реальную проверку авторизации
+
 function App() {
+	if (!isLogin) {
+		return <Auth />;
+	}
+
 	const [activeChat, setActiveChat] = useState(0);
 	const [messages, setMessages] = useState(initialMessages);
 	const [newMessage, setNewMessage] = useState("");
@@ -78,11 +86,13 @@ function App() {
 		if (e.key === "Enter" && !e.shiftKey) {
 			e.preventDefault();
 			handleSendMessage();
-			console.log(initialMessages);
+
+			setTimeout(() => {
+				document.getElementsByClassName("messages-container")[0].scrollTop =
+					document.getElementsByClassName("messages-container")[0].scrollHeight;
+			}, 0);
 		}
 	};
-
-	let isLogin = localStorage.getItem("isLogin") === "true";
 
 	switch (isLogin) {
 		case true:
