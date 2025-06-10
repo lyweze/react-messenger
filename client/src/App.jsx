@@ -52,7 +52,7 @@ const initialMessages = {
 };
 
 // let isLogin = localStorage.getItem("isLogin") === "true";
-let isLogin = false; // Замените на реальную проверку авторизации
+let isLogin = true; // Замените на реальную проверку авторизации
 
 function App() {
 	if (!isLogin) {
@@ -114,17 +114,22 @@ function App() {
 		 * If the token is valid, it configures axios to include the token in requests and fetches user data.
 		 */
 		const checkAuthStatus = async () => {
+			const token = localStorage.getItem("authToken");
 			try {
 				// Retrieve the token from localStorage
-				const token = localStorage.getItem("authToken");
-				if (typeof token !== "string" || token.trim() === "" || token === undefined) {
+				if (
+					typeof token !== "string" ||
+					token.trim() === "" ||
+					token === undefined
+				) {
 					console.log("Токен отсутствует или имеет неверный формат");
 					localStorage.removeItem("authToken");
 					const axiosInstance = axios.create();
 					delete axiosInstance.defaults.headers.common["Authorization"];
-					alert("Ваш токен недействителен. Пожалуйста, войдите снова.");
+					console.log(
+						"Ваш токен недействителен. Пожалуйста, войдите снова."
+					); /* */
 					setUser(null);
-					setLoading(false);
 
 					try {
 						const response = await axios.get("/api/auth/me");
@@ -154,7 +159,6 @@ function App() {
 				localStorage.removeItem("authToken");
 				delete axios.defaults.headers.common["Authorization"];
 			} finally {
-				setLoading(false);
 				if (!token) {
 					console.log("Токен не найден, пользователь не авторизован");
 					setUser(null);
