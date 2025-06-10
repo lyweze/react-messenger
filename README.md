@@ -13,22 +13,22 @@
 # В ПАПКЕ СЕРВЕР ВЫДЕРЖУ ТАКУЮ СТРУКТУРУ, МОЖЕШЬ СОЗДАТЬ ДЛЯ СВОЕГО УДОБСТВА ПАПКУ server-py
 
 (пока спиздил с нейронки)
-server/
-├── server.js           # Основной файл сервера
-|
-├── routes/
-│   └── auth.js         # Маршруты аутентификации
-|
-├── controllers/
-│   └── authController.js # Логика аутентификации
-|
-├── models/
-│   └── User.js         # Модель пользователя
-|
-├── config/
-│   └── db.js           # Конфигурация базы данных
-|
-├── utils/
-│   └── emailService.js # Служба отправки email
-|
-└── package.json
+server/  
+├── server.js           # Основной файл сервера  
+|  
+├── routes/  
+│   └── auth.js         # Маршруты аутентификации  
+|  
+├── controllers/  
+│   └── authController.js # Логика аутентификации  
+|  
+├── models/  
+│   └── User.js         # Модель пользователя  
+|  
+├── config/  
+│   └── db.js           # Конфигурация базы данных  
+|  
+├── utils/  
+│   └── emailService.js # Служба отправки email  
+|  
+└── package.json  
