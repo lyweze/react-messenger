@@ -238,36 +238,24 @@ function App() {
 	/* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
 	/* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
 
-	switch (isLogin) {
-		case true:
-			console.log("Пользователь авторизован");
-			return (
-				<div className="messenger-container">
-					<ChatList
-						chats={chats}
-						activeChat={activeChat}
-						onChatSelect={handleChatSelect}
-					/>
-					<ChatArea
-						activeChat={activeChat}
-						chats={chats}
-						messages={messages}
-						newMessage={newMessage}
-						onMessageChange={handleMessageChange}
-						onSendMessage={handleSendMessage}
-						onKeyPress={handleKeyPress}
-					/>
-				</div>
-			);
-			break;
-		case false:
-			console.log("Пользователь не авторизован");
-			return <Auth />;
-			break;
-		default:
-			console.log("Неизвестный статус авторизации");
-			return <Auth />;
-	}
+	return (
+		<div className="messenger-container">
+			<ChatList
+				chats={chats}
+				activeChat={activeChat}
+				onChatSelect={handleChatSelect}
+			/>
+			<ChatArea
+				activeChat={activeChat}
+				chats={chats}
+				messages={messages}
+				newMessage={newMessage}
+				onMessageChange={handleMessageChange}
+				onSendMessage={handleSendMessage}
+				onKeyPress={handleKeyPress}
+			/>
+		</div>
+	);
 }
 
 export default App;
