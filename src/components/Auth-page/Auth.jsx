@@ -52,7 +52,7 @@ const LoginForm = ({ onToggleForm }) => {
 	);
 };
 
-const RegisterForm = ({ onToggleForm, onKeyPress }) => {
+const RegisterForm = ({ onToggleForm }) => {
 	return (
 		<div className="auth-form">
 			<h2 className="auth-title">Регистрация</h2>
