@@ -106,31 +106,64 @@ function App() {
 
 	/* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
 	/* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
-	// useEffect(() => {
-	// 	const checkAuthStatus = async () => {
-	// 		try {
-	// 			// Проверка токена в localStorage
-	// 			const token = localStorage.getItem("authToken");
+	useEffect(() => {
+		/**
+		 * Function to check the authentication status of the user.
+		 * It verifies the presence and validity of the token stored in localStorage.
+		 * If the token is invalid or missing, it removes the token, resets the user state, and alerts the user.
+		 * If the token is valid, it configures axios to include the token in requests and fetches user data.
+		 */
+		const checkAuthStatus = async () => {
+			try {
+				// Retrieve the token from localStorage
+				const token = localStorage.getItem("authToken");
+				if (typeof token !== "string" || token.trim() === "" || token === undefined) {
+					console.log("Токен отсутствует или имеет неверный формат");
+					localStorage.removeItem("authToken");
+					const axiosInstance = axios.create();
+					delete axiosInstance.defaults.headers.common["Authorization"];
+					alert("Ваш токен недействителен. Пожалуйста, войдите снова.");
+					setUser(null);
+					setLoading(false);
 
-	// 			if (token) {
-	// 				// Настраиваем axios для отправки токена с каждым запросом
-	// 				axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+					try {
+						const response = await axios.get("/api/auth/me");
+						if (response.data && response.data.user) {
+							setUser(response.data.user);
+						} else {
+							console.error("Unexpected response format:", response.data);
+							setUser(null);
+						}
+					} catch (error) {
+						console.error("Error fetching user data:", error);
+						setUser(null);
+					}
+				}
 
-	// 				// Проверяем валидность токена
-	// 				const response = await axios.get("/api/auth/me");
-	// 				setUser(response.data.user);
-	// 			}
-	// 		} catch (error) {
-	// 			// Если токен недействителен, удаляем его
-	// 			localStorage.removeItem("authToken");
-	// 			delete axios.defaults.headers.common["Authorization"];
-	// 		} finally {
-	// 			setLoading(false);
-	// 		}
-	// 	};
+				if (token) {
+					console.log("Токен найден:", token);
+					// Configure axios to include the token in requests
+					axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-	// 	checkAuthStatus();
-	// }, []);
+					// Validate the token by fetching user data
+					const response = await axios.get("/api/auth/me");
+					setUser(response.data.user);
+				}
+			} catch (error) {
+				// Handle invalid token by removing it
+				localStorage.removeItem("authToken");
+				delete axios.defaults.headers.common["Authorization"];
+			} finally {
+				setLoading(false);
+				if (!token) {
+					console.log("Токен не найден, пользователь не авторизован");
+					setUser(null);
+				}
+			}
+		};
+
+		checkAuthStatus();
+	}, []);
 
 	// // Функция для входа пользователя
 	// const login = (token, userData) => {
