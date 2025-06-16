@@ -15,5 +15,5 @@ export default defineConfig({
 		},
 	},
 	root: "./",
-	base: "/react-messenger/",
+	base: "/",
 });

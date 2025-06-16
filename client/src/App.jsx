@@ -15,6 +15,7 @@ import { memo } from "react";
 import ChatList from "./components/ChatList/ChatList";
 import ChatArea from "./components/ChatArea/ChatArea";
 import Auth from "./components/Auth-page/Auth";
+import Loading from "./components/Loading-page/Loading-page";
 
 const chats = [
 	{
@@ -29,36 +30,20 @@ const chats = [
 
 const initialMessages = {
 	0: [
-		{ id: 1, text: "Привет! Как дела?", sent: false, time: "10:30" },
+		{ id: 1, text: "Входящее", sent: false, time: "10:30" },
 		{
 			id: 2,
-			text: "Привет! Все хорошо, спасибо. Что нового?",
+			text: "Исходящее",
 			sent: true,
 			time: "10:32",
-		},
-		{
-			id: 3,
-			text: "Ничего особенного. Просто проверяю новый мессенджер.",
-			sent: false,
-			time: "10:33",
-		},
-		{
-			id: 4,
-			text: "Выглядит отлично! Очень похоже на iOS Telegram.",
-			sent: true,
-			time: "10:35",
 		},
 	],
 };
 
 // let isLogin = localStorage.getItem("isLogin") === "true";
-let isLogin = true; // Замените на реальную проверку авторизации
+let isLogin = false; // Замените на реальную проверку авторизации
 
 function App() {
-	if (!isLogin) {
-		return <Auth />;
-	}
-
 	const [activeChat, setActiveChat] = useState(0);
 	const [messages, setMessages] = useState(initialMessages);
 	const [newMessage, setNewMessage] = useState("");
@@ -104,157 +89,113 @@ function App() {
 		}
 	};
 
-	/* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
-	/* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
+	// useEffect(() => {
+	// 	/**
+	// 	 * Function to check the authentication status of the user.
+	// 	 * It verifies the presence and validity of the token stored in localStorage.
+	// 	 * If the token is invalid or missing, it removes the token, resets the user state, and alerts the user.
+	// 	 * If the token is valid, it configures axios to include the token in requests and fetches user data.
+	// 	 */
+	// 	const checkAuthStatus = async () => {
+	// 		const token = localStorage.getItem("authToken");
+	// 		try {
+	// 			// Retrieve the token from localStorage
+	// 			if (
+	// 				typeof token !== "string" ||
+	// 				token.trim() === "" ||
+	// 				token === undefined
+	// 			) {
+	// 				console.log("Токен отсутствует или имеет неверный формат");
+	// 				localStorage.removeItem("authToken");
+	// 				const axiosInstance = axios.create();
+	// 				delete axiosInstance.defaults.headers.common["Authorization"];
+	// 				console.log(
+	// 					"Ваш токен недействителен. Пожалуйста, войдите снова."
+	// 				); /* */
+	// 				setUser(null);
+
+	// 				try {
+	// 					const response = await axios.get("/api/auth/me");
+	// 					if (response.data && response.data.user) {
+	// 						setUser(response.data.user);
+	// 					} else {
+	// 						console.error("Unexpected response format:", response.data);
+	// 						setUser(null);
+	// 					}
+	// 				} catch (error) {
+	// 					console.error("Error fetching user data:", error);
+	// 					setUser(null);
+	// 				}
+	// 			}
+
+	// 			if (token) {
+	// 				console.log("Токен найден:", token);
+	// 				// Configure axios to include the token in requests
+	// 				axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+	// 				// Validate the token by fetching user data
+	// 				const response = await axios.get("/api/auth/me");
+	// 				setUser(response.data.user);
+	// 			}
+	// 		} catch (error) {
+	// 			// Handle invalid token by removing it
+	// 			localStorage.removeItem("authToken");
+	// 			delete axios.defaults.headers.common["Authorization"];
+	// 		} finally {
+	// 			if (!token) {
+	// 				console.log("Токен не найден, пользователь не авторизован");
+	// 				setUser(null);
+	// 			}
+	// 		}
+	// 	};
+
+	// 	checkAuthStatus();
+	// }, []);
+
+	const [isLogin, setIsLogin]  = useState(null);
 	useEffect(() => {
-		/**
-		 * Function to check the authentication status of the user.
-		 * It verifies the presence and validity of the token stored in localStorage.
-		 * If the token is invalid or missing, it removes the token, resets the user state, and alerts the user.
-		 * If the token is valid, it configures axios to include the token in requests and fetches user data.
-		 */
-		const checkAuthStatus = async () => {
-			const token = localStorage.getItem("authToken");
-			try {
-				// Retrieve the token from localStorage
-				if (
-					typeof token !== "string" ||
-					token.trim() === "" ||
-					token === undefined
-				) {
-					console.log("Токен отсутствует или имеет неверный формат");
-					localStorage.removeItem("authToken");
-					const axiosInstance = axios.create();
-					delete axiosInstance.defaults.headers.common["Authorization"];
-					console.log(
-						"Ваш токен недействителен. Пожалуйста, войдите снова."
-					); /* */
-					setUser(null);
-
-					try {
-						const response = await axios.get("/api/auth/me");
-						if (response.data && response.data.user) {
-							setUser(response.data.user);
-						} else {
-							console.error("Unexpected response format:", response.data);
-							setUser(null);
-						}
-					} catch (error) {
-						console.error("Error fetching user data:", error);
-						setUser(null);
-					}
-				}
-
-				if (token) {
-					console.log("Токен найден:", token);
-					// Configure axios to include the token in requests
-					axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-
-					// Validate the token by fetching user data
-					const response = await axios.get("/api/auth/me");
-					setUser(response.data.user);
-				}
-			} catch (error) {
-				// Handle invalid token by removing it
-				localStorage.removeItem("authToken");
-				delete axios.defaults.headers.common["Authorization"];
-			} finally {
-				if (!token) {
-					console.log("Токен не найден, пользователь не авторизован");
-					setUser(null);
-				}
+		const checkLoginStatus = () => {
+			if (isLogin) {
+				// Если пользователь авторизован, устанавливаем состояние
+				<Navigate to="/" replace />;
 			}
-		};
+			else {
+				// Если пользователь не авторизован, перенаправляем на страницу авторизации
+				<Navigate to="/auth" replace />;
+			}
+		}
 
-		checkAuthStatus();
+		checkLoginStatus();
 	}, []);
 
-	// // Функция для входа пользователя
-	// const login = (token, userData) => {
-	// 	localStorage.setItem("authToken", token);
-	// 	axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-	// 	setUser(userData);
-	// };
-
-	// // Функция для выхода пользователя
-	// const logout = () => {
-	// 	localStorage.removeItem("authToken");
-	// 	delete axios.defaults.headers.common["Authorization"];
-	// 	setUser(null);
-	// };
-
-	// // Показываем индикатор загрузки, пока проверяем аутентификацию
-	// if (loading) {
-	// 	return <div className="app-loading">Загрузка...</div>;
-	// }
-
-	// return (
-	// 	<AuthContext.Provider value={{ user, login, logout }}>
-	// 		<Router>
-	// 			<div className="app">
-	// 				<Navbar />
-	// 				<main className="app-main">
-	// 					<Routes>
-	// 						{/* Публичные маршруты */}
-	// 						<Route path="/" element={<HomePage />} />
-	// 						<Route
-	// 							path="/register"
-	// 							element={
-	// 								user ? (
-	// 									<Navigate to="/dashboard" replace />
-	// 								) : (
-	// 									<RegistrationForm />
-	// 								)
-	// 							}
-	// 						/>
-	// 						<Route
-	// 							path="/login"
-	// 							element={
-	// 								user ? <Navigate to="/dashboard" replace /> : <Login />
-	// 							}
-	// 						/>
-	// 						<Route path="/verify/:token" element={<EmailVerification />} />
-
-	// 						{/* Защищенные маршруты */}
-	// 						<Route
-	// 							path="/dashboard"
-	// 							element={
-	// 								<ProtectedRoute user={user}>
-	// 									<Dashboard />
-	// 								</ProtectedRoute>
-	// 							}
-	// 						/>
-
-	// 						{/* Маршрут для несуществующих страниц */}
-	// 						<Route path="*" element={<NotFound />} />
-	// 					</Routes>
-	// 				</main>
-	// 				<Footer />
-	// 			</div>
-	// 		</Router>
-	// 	</AuthContext.Provider>
-	// );
-	/* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
-	/* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
-	/* \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ */
-
 	return (
-		<div className="messenger-container">
-			<ChatList
-				chats={chats}
-				activeChat={activeChat}
-				onChatSelect={handleChatSelect}
-			/>
-			<ChatArea
-				activeChat={activeChat}
-				chats={chats}
-				messages={messages}
-				newMessage={newMessage}
-				onMessageChange={handleMessageChange}
-				onSendMessage={handleSendMessage}
-				onKeyPress={handleKeyPress}
-			/>
-		</div>
+		<Router>
+			<Routes>
+				<Route path="/auth" element={<Auth />} />
+				<Route
+					path="/"
+					element={
+						<div className="messenger-container">
+							<ChatList
+								chats={chats}
+								activeChat={activeChat}
+								onChatSelect={handleChatSelect}
+							/>
+							<ChatArea
+								activeChat={activeChat}
+								chats={chats}
+								messages={messages}
+								newMessage={newMessage}
+								onMessageChange={handleMessageChange}
+								onSendMessage={handleSendMessage}
+								onKeyPress={handleKeyPress}
+							/>
+						</div>
+					}
+				/>
+				<Route path="*" element={<Navigate to="/auth" replace />} />
+			</Routes>
+		</Router>
 	);
 }
 
