@@ -28,7 +28,7 @@ const LoginForm = ({ onToggleForm }) => {
 				className="auth-button"
 				onClick={() => {
 					alert("Вход выполнен");
-					localStorage.setItem("isLogin", "false");
+					localStorage.setItem("isLogin", "true");
 					window.location.reload();
 				}}
 			>
@@ -122,7 +122,7 @@ const RegisterForm = ({ onToggleForm }) => {
 };
 
 const Auth = () => {
-	const [isLogin, setIsLogin] = React.useState(true); // true = форма входа, false = форма регистрации
+	const [isLogin, setIsLogin] = React.useState(true);
 
 	const toggleForm = () => {
 		setIsLogin((prevIsLogin) => !prevIsLogin);

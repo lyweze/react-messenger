@@ -6,11 +6,11 @@ import {
 	Routes,
 	Route,
 	Navigate,
+	useNavigate,
 } from "react-router-dom";
 
 import axios from "axios";
 import "./App.css";
-import { memo } from "react";
 
 import ChatList from "./components/ChatList/ChatList";
 import ChatArea from "./components/ChatArea/ChatArea";
@@ -40,13 +40,58 @@ const initialMessages = {
 	],
 };
 
-// let isLogin = localStorage.getItem("isLogin") === "true";
-let isLogin = false; // Замените на реальную проверку авторизации
-
 function App() {
 	const [activeChat, setActiveChat] = useState(0);
 	const [messages, setMessages] = useState(initialMessages);
 	const [newMessage, setNewMessage] = useState("");
+	const [loading, setLoading] = useState(true);
+
+	const [isLogin, setIsLogin] = useState(
+		localStorage.getItem("isLogin") === "true"
+	);
+
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (loading) {
+			navigate("/", { replace: true });
+		}
+	}, [navigate, isLogin]);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			if (isLogin) {
+				try {
+					// const response = await axios.get("http://localhost:3000/api/chats");
+					// if (response.data) {
+					// 	console.log("Данные успешно загружены:", response.data);
+					// 	// setChats(response.data.chats);
+					// 	// setMessages(response.data.messages);
+					// }
+					await new Promise((resolve) => setTimeout(resolve, 2000));
+					setMessages(initialMessages);
+				} catch (error) {
+					console.error("Ошибка при загрузке данных:", error);
+				} finally {
+					setLoading(false);
+					switch (isLogin) {
+						case true:
+							navigate("/messages", { replace: true });
+							break;
+						case false:
+							navigate("/auth", { replace: true });
+							break;
+					}
+					console.log("Загрузка данных завершена");
+				}
+			} else {
+				setLoading(false);
+				navigate("/auth", { replace: true });
+			}
+		};
+
+		fetchData();
+	}, [isLogin]);
 
 	const handleChatSelect = (chatId) => {
 		setActiveChat(chatId);
@@ -89,113 +134,32 @@ function App() {
 		}
 	};
 
-	// useEffect(() => {
-	// 	/**
-	// 	 * Function to check the authentication status of the user.
-	// 	 * It verifies the presence and validity of the token stored in localStorage.
-	// 	 * If the token is invalid or missing, it removes the token, resets the user state, and alerts the user.
-	// 	 * If the token is valid, it configures axios to include the token in requests and fetches user data.
-	// 	 */
-	// 	const checkAuthStatus = async () => {
-	// 		const token = localStorage.getItem("authToken");
-	// 		try {
-	// 			// Retrieve the token from localStorage
-	// 			if (
-	// 				typeof token !== "string" ||
-	// 				token.trim() === "" ||
-	// 				token === undefined
-	// 			) {
-	// 				console.log("Токен отсутствует или имеет неверный формат");
-	// 				localStorage.removeItem("authToken");
-	// 				const axiosInstance = axios.create();
-	// 				delete axiosInstance.defaults.headers.common["Authorization"];
-	// 				console.log(
-	// 					"Ваш токен недействителен. Пожалуйста, войдите снова."
-	// 				); /* */
-	// 				setUser(null);
-
-	// 				try {
-	// 					const response = await axios.get("/api/auth/me");
-	// 					if (response.data && response.data.user) {
-	// 						setUser(response.data.user);
-	// 					} else {
-	// 						console.error("Unexpected response format:", response.data);
-	// 						setUser(null);
-	// 					}
-	// 				} catch (error) {
-	// 					console.error("Error fetching user data:", error);
-	// 					setUser(null);
-	// 				}
-	// 			}
-
-	// 			if (token) {
-	// 				console.log("Токен найден:", token);
-	// 				// Configure axios to include the token in requests
-	// 				axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-
-	// 				// Validate the token by fetching user data
-	// 				const response = await axios.get("/api/auth/me");
-	// 				setUser(response.data.user);
-	// 			}
-	// 		} catch (error) {
-	// 			// Handle invalid token by removing it
-	// 			localStorage.removeItem("authToken");
-	// 			delete axios.defaults.headers.common["Authorization"];
-	// 		} finally {
-	// 			if (!token) {
-	// 				console.log("Токен не найден, пользователь не авторизован");
-	// 				setUser(null);
-	// 			}
-	// 		}
-	// 	};
-
-	// 	checkAuthStatus();
-	// }, []);
-
-	const [isLogin, setIsLogin]  = useState(null);
-	useEffect(() => {
-		const checkLoginStatus = () => {
-			if (isLogin) {
-				// Если пользователь авторизован, устанавливаем состояние
-				<Navigate to="/" replace />;
-			}
-			else {
-				// Если пользователь не авторизован, перенаправляем на страницу авторизации
-				<Navigate to="/auth" replace />;
-			}
-		}
-
-		checkLoginStatus();
-	}, []);
-
 	return (
-		<Router>
-			<Routes>
-				<Route path="/auth" element={<Auth />} />
-				<Route
-					path="/"
-					element={
-						<div className="messenger-container">
-							<ChatList
-								chats={chats}
-								activeChat={activeChat}
-								onChatSelect={handleChatSelect}
-							/>
-							<ChatArea
-								activeChat={activeChat}
-								chats={chats}
-								messages={messages}
-								newMessage={newMessage}
-								onMessageChange={handleMessageChange}
-								onSendMessage={handleSendMessage}
-								onKeyPress={handleKeyPress}
-							/>
-						</div>
-					}
-				/>
-				<Route path="*" element={<Navigate to="/auth" replace />} />
-			</Routes>
-		</Router>
+		<Routes>
+			<Route path="/auth" element={<Auth />} />
+			<Route
+				path="/messages"
+				element={
+					<div className="messenger-container">
+						<ChatList
+							chats={chats}
+							activeChat={activeChat}
+							onChatSelect={handleChatSelect}
+						/>
+						<ChatArea
+							activeChat={activeChat}
+							chats={chats}
+							messages={messages}
+							newMessage={newMessage}
+							onMessageChange={handleMessageChange}
+							onSendMessage={handleSendMessage}
+							onKeyPress={handleKeyPress}
+						/>
+					</div>
+				}
+			/>
+			<Route path="/" element={<Loading />} />
+		</Routes>
 	);
 }
 
