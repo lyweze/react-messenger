@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
 // import AuthContext from "./context/AuthContext";
 
-import {
-	Routes,
-	Route,
-	useNavigate,
-} from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 
 import "./App.css";
 
@@ -105,7 +101,11 @@ function App() {
 	}, [isLogin]);
 
 	const handleChatSelect = (chatId) => {
+		setMessages(0);
 		setActiveChat(chatId);
+		setTimeout(() => {
+			setMessages(initialMessages);
+		}, 0);
 		chats[chatId].unread = 0;
 	};
 
@@ -132,7 +132,7 @@ function App() {
 		chats[activeChat].lastMessage = newMessage;
 		chats[activeChat].time = newMessageObj.time;
 		chats[activeChat].unread += 1;
-		
+
 		handleChatSelect(activeChat);
 
 		setMessages({
