@@ -51,9 +51,8 @@ function ChatArea({
 							<i className="fas fa-paperclip"></i>
 						</button>
 					</div>
-					<input
+					<textarea
 						name="message-input"
-						type="text"
 						className="message-input"
 						placeholder="Сообщение..."
 						value={newMessage}

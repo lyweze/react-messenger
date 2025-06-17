@@ -2,10 +2,8 @@ import React, { useState, useEffect } from "react";
 // import AuthContext from "./context/AuthContext";
 
 import {
-	BrowserRouter as Router,
 	Routes,
 	Route,
-	Navigate,
 	useNavigate,
 } from "react-router-dom";
 
@@ -55,7 +53,7 @@ const chats = [
 	},
 ];
 
-let ws;
+let ws = null; // Переменная для хранения WebSocket соединения
 
 // localStorage.setItem("isLogin", "false");
 
@@ -81,14 +79,15 @@ function App() {
 		const fetchData = async () => {
 			if (isLogin) {
 				try {
-					const delay = (ms) =>
-						new Promise((resolve) => setTimeout(resolve, ms));
-					await delay(2000); // Задержка в 2 секунды
+					// const delay = (ms) =>
+					// 	new Promise((resolve) => setTimeout(resolve, ms));
+					// await delay(2000); // Задержка в 2 секунды
 
 					ws = new WebSocket("ws://localhost:8080");
 				} catch (error) {
-					console.error("Ошибка при загрузке данных:", error);
+					console.error("Websocket error:", error);
 				} finally {
+					console.log("WebSocket подключен");
 					ws.onmessage = (e) => {
 						console.log(e.data);
 					};
@@ -107,6 +106,7 @@ function App() {
 
 	const handleChatSelect = (chatId) => {
 		setActiveChat(chatId);
+		chats[chatId].unread = 0;
 	};
 
 	const handleMessageChange = (e) => {
@@ -128,6 +128,12 @@ function App() {
 			user_id: activeChat,
 		};
 		ws.send(JSON.stringify(newMessageObj));
+
+		chats[activeChat].lastMessage = newMessage;
+		chats[activeChat].time = newMessageObj.time;
+		chats[activeChat].unread += 1;
+		
+		handleChatSelect(activeChat);
 
 		setMessages({
 			...messages,

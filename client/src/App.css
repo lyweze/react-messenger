@@ -69,7 +69,7 @@ body {
 }
 
 .sidebar-header {
-	padding: 20px;
+	padding: 30px;
 	background: linear-gradient(135deg, #3a3a3c, #5856d6, #48484a);
 	background-size: 200% 200%;
 	animation: headerGradient 8s ease infinite;
@@ -290,6 +290,7 @@ body {
 	border-radius: 20px;
 	position: relative;
 	word-wrap: break-word;
+	white-space: pre-wrap;
 }
 
 .message.received .message-bubble {
@@ -311,7 +312,8 @@ body {
 	margin-top: 4px;
 	text-align: right;
 	color: inherit;
-} /* Input Area */
+}
+
 .input-area {
 	padding: 20px;
 	background: #2c2c2e;
@@ -344,6 +346,20 @@ body {
 
 .message-input::placeholder {
 	color: #8e8e93;
+}
+.message-input::-webkit-scrollbar {
+	width: 6px;
+}
+.message-input::-webkit-scrollbar-track {
+	background: transparent;
+}
+.message-input::-webkit-scrollbar-thumb {
+	background: rgba(255, 255, 255, 0.2);
+	border-radius: 3px;
+	cursor: auto;
+}
+.message-input::-webkit-scrollbar-thumb:hover {
+	background: rgba(255, 255, 255, 0.3);
 }
 
 .input-actions {
