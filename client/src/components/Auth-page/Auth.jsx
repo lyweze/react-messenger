@@ -27,7 +27,6 @@ const LoginForm = ({ onToggleForm }) => {
 			<button
 				className="auth-button"
 				onClick={() => {
-					alert("Вход выполнен");
 					localStorage.setItem("isLogin", "true");
 					window.location.reload();
 				}}
@@ -96,7 +95,6 @@ const RegisterForm = ({ onToggleForm }) => {
 			<button
 				className="auth-button"
 				onClick={() => {
-					alert("Регистрация выполнена");
 					localStorage.setItem("isLogin", "false");
 					window.location.reload();
 				}}

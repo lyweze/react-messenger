@@ -9,24 +9,12 @@ import {
 	useNavigate,
 } from "react-router-dom";
 
-import axios from "axios";
 import "./App.css";
 
 import ChatList from "./components/ChatList/ChatList";
 import ChatArea from "./components/ChatArea/ChatArea";
 import Auth from "./components/Auth-page/Auth";
 import Loading from "./components/Loading-page/Loading-page";
-
-const chats = [
-	{
-		id: 0,
-		name: "Анна Петрова",
-		lastMessage: "",
-		time: "10:35",
-		unread: 0,
-		online: false,
-	},
-];
 
 const initialMessages = {
 	0: [
@@ -38,7 +26,38 @@ const initialMessages = {
 			time: "10:32",
 		},
 	],
+	1: [
+		{ id: 1, text: "Привет!", sent: false, time: "10:40" },
+		{ id: 2, text: "Как дела?", sent: true, time: "10:41" },
+	],
 };
+
+const chats = [
+	{
+		id: 0,
+		name: "Анна Петрова",
+		lastMessage:
+			initialMessages[0][initialMessages[0].length - 1].text || "Нет сообщений",
+		time: "10:35",
+		unread: 0,
+		online: false,
+		user_id: 0,
+	},
+	{
+		id: 1,
+		name: "Иван Иванов",
+		lastMessage:
+			initialMessages[1][initialMessages[1].length - 1].text || "Нет сообщений",
+		time: "10:40",
+		unread: 0,
+		online: true,
+		user_id: 1,
+	},
+];
+
+let ws;
+
+// localStorage.setItem("isLogin", "false");
 
 function App() {
 	const [activeChat, setActiveChat] = useState(0);
@@ -62,27 +81,20 @@ function App() {
 		const fetchData = async () => {
 			if (isLogin) {
 				try {
-					// const response = await axios.get("http://localhost:3000/api/chats");
-					// if (response.data) {
-					// 	console.log("Данные успешно загружены:", response.data);
-					// 	// setChats(response.data.chats);
-					// 	// setMessages(response.data.messages);
-					// }
-					await new Promise((resolve) => setTimeout(resolve, 2000));
-					setMessages(initialMessages);
+					const delay = (ms) =>
+						new Promise((resolve) => setTimeout(resolve, ms));
+					await delay(2000); // Задержка в 2 секунды
+
+					ws = new WebSocket("ws://localhost:8080");
 				} catch (error) {
 					console.error("Ошибка при загрузке данных:", error);
 				} finally {
+					ws.onmessage = (e) => {
+						console.log(e.data);
+					};
+
 					setLoading(false);
-					switch (isLogin) {
-						case true:
-							navigate("/messages", { replace: true });
-							break;
-						case false:
-							navigate("/auth", { replace: true });
-							break;
-					}
-					console.log("Загрузка данных завершена");
+					navigate("/messages", { replace: true });
 				}
 			} else {
 				setLoading(false);
@@ -113,7 +125,9 @@ function App() {
 				hour: "2-digit",
 				minute: "2-digit",
 			}),
+			user_id: activeChat,
 		};
+		ws.send(JSON.stringify(newMessageObj));
 
 		setMessages({
 			...messages,
