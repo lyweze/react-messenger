@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 
 const ChatList = function (props) {
 	const { chats, activeChat, onChatSelect } = props;
+
+	const [, forceUpdate] = useState(0);
+
+	function handleForceUpdate() {
+		forceUpdate((x) => x + 1); // увеличиваем значение, чтобы вызвать ререндер
+	}
 
 	return (
 		<div className="sidebar">
@@ -12,6 +18,27 @@ const ChatList = function (props) {
 					type="text"
 					className="search-box"
 					placeholder="Поиск"
+					onKeyDown={(e) => {
+						if (e.key === "Enter") {
+							e.preventDefault();
+							e.target.blur();
+							const searchTrim = e.target.value.trim().toLowerCase();
+							const chatsTrim = [];
+							for (let i = 0; i < chats.length; i++) {
+								if (chats[i].name.toLowerCase().includes(searchTrim)) {
+									chatsTrim.push(chats[i]);
+									props = {
+										...props,
+										chats: chatsTrim,
+									};
+
+									chats = chatsTrim;
+									handleForceUpdate();
+								}
+							}
+							console.log("Search result:", chatsTrim);
+						}
+					}}
 				/>
 			</div>
 			<div className="chat-list">

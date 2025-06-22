@@ -31,7 +31,8 @@ const chats = [
 		id: 0,
 		name: "Анна Петрова",
 		lastMessage:
-			initialMessages[0][initialMessages[0].length - 1].text || "Нет сообщений",
+			// initialMessages[0][initialMessages[0].length - 1].text || "Нет сообщений",
+			'',
 		time: "10:35",
 		unread: 0,
 		online: false,
@@ -41,7 +42,8 @@ const chats = [
 		id: 1,
 		name: "Иван Иванов",
 		lastMessage:
-			initialMessages[1][initialMessages[1].length - 1].text || "Нет сообщений",
+			// initialMessages[1][initialMessages[1].length - 1].text || "Нет сообщений",
+			'',
 		time: "10:40",
 		unread: 0,
 		online: true,
@@ -131,9 +133,6 @@ function App() {
 
 		chats[activeChat].lastMessage = newMessage;
 		chats[activeChat].time = newMessageObj.time;
-		chats[activeChat].unread += 1;
-
-		handleChatSelect(activeChat);
 
 		setMessages({
 			...messages,
