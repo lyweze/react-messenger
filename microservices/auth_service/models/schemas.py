@@ -1,21 +1,18 @@
-from pydantic import BaseModel, EmailStr
-from typing import Optional
 from datetime import datetime
+from typing import Optional
+
+from pydantic import BaseModel, EmailStr
 
 
+# TWO DIFF SCHEMAS FOR REQUEST
 class RegisterSchema(BaseModel):
     email: EmailStr
     password: str
 
 
-class UserIdentity(BaseModel):
-    identity_id: str
-    id: str
-    user_id: str
-    provider: str
-    email: str
-    created_at: datetime
-    updated_at: datetime
+class LoginSchema(BaseModel):
+    email: EmailStr
+    password: str
 
 
 class UserRegisterResponse(BaseModel):
@@ -36,6 +33,13 @@ class RegisterResponse(BaseModel):
     user: UserRegisterResponse
 
 
-class LoginSchema(BaseModel):
-    email: EmailStr
-    password: str
+class LoginResponse(BaseModel):
+    access_token: str
+    token_type: str
+    expires_in: int
+    refresh_token: str
+    user: UserRegisterResponse
+
+
+class RefreshRequest(BaseModel):
+    refresh_token: str

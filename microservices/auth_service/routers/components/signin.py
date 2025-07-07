@@ -1,17 +1,18 @@
-from fastapi import APIRouter, HTTPException
 import httpx
+from fastapi import APIRouter, HTTPException
+
 from microservices.auth_service.config.settings import AuthApiSettings
-from microservices.auth_service.models.responses import LoginSchema
+from microservices.auth_service.models.schemas import LoginResponse, LoginSchema
 
 router = APIRouter()
 
 
-@router.post("/login", response_model=LoginSchema)
+@router.post("/login", response_model=LoginResponse)
 async def login(data: LoginSchema):
     payload = {"email": data.email, "password": data.password}
     async with httpx.AsyncClient() as client:
         response = await client.post(
-            url=f"{AuthApiSettings.SUPABASE_URL}/auth/v1/token?grant_type=password",
+            url=AuthApiSettings.SIGNIN_URL,
             json=payload,
             headers=AuthApiSettings.AUTH_HEADERS,
         )

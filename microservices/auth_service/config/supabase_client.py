@@ -1,6 +1,5 @@
-from supabase import create_client, Client
 from settings import AuthApiSettings
-
+from supabase import Client, create_client
 
 if not AuthApiSettings.SUPABASE_URL or not AuthApiSettings.SUPABASE_ANON_KEY:
     raise ValueError("SUPABASE_URL/SUPABASE_ANON_KEY doesnt exists")

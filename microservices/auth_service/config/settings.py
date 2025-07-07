@@ -1,5 +1,6 @@
 import os
 from typing import List
+
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -30,6 +31,9 @@ class AuthApiSettings:
         "apikey": SUPABASE_ANON_KEY,
         "Content-Type": "application/json",
     }
+    REGISTER_URL = f"{SUPABASE_URL}/auth/v1/signup"
+    SIGNIN_URL = f"{SUPABASE_URL}/auth/v1/token?grant_type=password"
+    REFRESH_TOKEN_URL = f"{SUPABASE_URL}/auth/v1/token?grant_type=refresh_token"
 
     API_V1_PREFIX: str = "/api/v1"
     PROJECT_NAME: str = "react-messenger auth"
