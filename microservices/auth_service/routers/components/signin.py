@@ -9,6 +9,9 @@ router = APIRouter()
 
 @router.post("/login", response_model=LoginResponse)
 async def login(data: LoginSchema):
+    """
+    входим юзера
+    """
     payload = {"email": data.email, "password": data.password}
     async with httpx.AsyncClient() as client:
         response = await client.post(

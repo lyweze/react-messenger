@@ -9,6 +9,9 @@ router = APIRouter()
 
 @router.post("/register", response_model=RegisterResponse)
 async def register(data: RegisterSchema):
+    """
+    регистрируем юзера и получаем токена
+    """
     async with httpx.AsyncClient() as client:
         response = await client.post(
             url=AuthApiSettings.REGISTER_URL,
