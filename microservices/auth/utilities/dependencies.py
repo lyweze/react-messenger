@@ -2,7 +2,7 @@ import httpx
 from fastapi import Depends, HTTPException
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
-from microservices.auth_service.config.settings import AuthApiSettings
+from microservices.auth.config.settings import AuthApiSettings
 
 security = HTTPBearer()
 

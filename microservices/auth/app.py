@@ -1,7 +1,7 @@
 import uvicorn
 from fastapi import FastAPI
 
-from microservices.auth_service.routers import united_routers
+from microservices.auth.routers import united_routers
 
 app = FastAPI(title="Auth API")
 app.include_router(united_routers.auth_router)

@@ -1,8 +1,8 @@
 import httpx
 from fastapi import APIRouter, HTTPException, status
 
-from microservices.auth_service.config.settings import AuthApiSettings
-from microservices.auth_service.models.schemas import RegisterResponse, RegisterSchema
+from microservices.auth.config.settings import AuthApiSettings
+from microservices.auth.schemas.schemas import RegisterResponse, RegisterSchema
 
 router = APIRouter()
 

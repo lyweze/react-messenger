@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from microservices.auth_service.config.settings import AuthApiSettings
-from microservices.auth_service.routers.components import fast_login, register, signin, refresh_tokens
+from microservices.auth.config.settings import AuthApiSettings
+from microservices.auth.routers.components import fast_login, register, signin, refresh_tokens
 
 auth_router = APIRouter(prefix=f"{AuthApiSettings.API_V1_PREFIX}", tags=["auth"])
 

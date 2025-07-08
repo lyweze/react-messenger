@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 
-from microservices.auth_service.utilities.dependencies import get_current_user
+from microservices.auth.utilities.dependencies import get_current_user
 
 router = APIRouter()
 
