@@ -4,7 +4,6 @@ from typing import Optional
 from pydantic import BaseModel, EmailStr
 
 
-# TWO DIFF SCHEMAS FOR REQUEST
 class RegisterSchema(BaseModel):
     email: EmailStr
     password: str

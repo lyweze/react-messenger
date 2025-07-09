@@ -1,20 +1,19 @@
+from typing import Any
+
 import httpx
 from fastapi import APIRouter, HTTPException
 
 from microservices.auth.config.settings import AuthApiSettings
 from microservices.auth.schemas.schemas import LoginResponse, LoginSchema
 
-router = APIRouter()
+router: APIRouter = APIRouter()
 
 
 @router.post("/login", response_model=LoginResponse)
-async def login(data: LoginSchema):
-    """
-    входим юзера
-    """
-    payload = {"email": data.email, "password": data.password}
+async def login(data: LoginSchema) -> Any:
+    payload: dict[str, str] = {"email": data.email, "password": data.password}
     async with httpx.AsyncClient() as client:
-        response = await client.post(
+        response: httpx.Response = await client.post(
             url=AuthApiSettings.SIGNIN_URL,
             json=payload,
             headers=AuthApiSettings.AUTH_HEADERS,

@@ -7,15 +7,11 @@ load_dotenv()
 
 
 class AuthApiSettings:
-    SUPABASE_JWT_SECRET: str = os.getenv("SUPABASE_JWT_SECRET", "")
-    JWT_ALGORITHM: str = "HS256"
-    SUPABASE_URL = os.getenv("SUPABASE_URL")
-    SUPABASE_ANON_KEY = os.getenv("SUPABASE_ANON_KEY")
+    SUPABASE_URL: str = os.getenv("SUPABASE_URL")
+    SUPABASE_ANON_KEY: str = os.getenv("SUPABASE_ANON_KEY")
 
     HOST: str = os.getenv("HOST", "0.0.0.0")
     PORT: int = int(os.getenv("PORT", "3000"))
-
-    # CORS SECURITY
 
     CORS_ORIGINS: List[str] = os.getenv("CORS_ORIGINS", "*").split(",")
     CORS_ALLOW_CREDENTIALS: bool = True
@@ -26,24 +22,19 @@ class AuthApiSettings:
         "Content-Type",
         "Authorization",
     ]
-
-    AUTH_HEADERS = {
+    AUTH_HEADERS: dict[str, str] = {
         "apikey": SUPABASE_ANON_KEY,
         "Content-Type": "application/json",
     }
-    REGISTER_URL = f"{SUPABASE_URL}/auth/v1/signup"
-    SIGNIN_URL = f"{SUPABASE_URL}/auth/v1/token?grant_type=password"
-    REFRESH_TOKEN_URL = f"{SUPABASE_URL}/auth/v1/token?grant_type=refresh_token"
+
+    REGISTER_URL: str = f"{SUPABASE_URL}/auth/v1/signup"
+    SIGNIN_URL: str = f"{SUPABASE_URL}/auth/v1/token?grant_type=password"
+    REFRESH_TOKEN_URL: str = f"{SUPABASE_URL}/auth/v1/token?grant_type=refresh_token"
 
     API_V1_PREFIX: str = "/api/v1"
     PROJECT_NAME: str = "react-messenger auth"
     VERSION: str = "1.0.0"
-
     LOG_LEVEL: str = os.getenv("LOG_LEVEL", "INFO")
 
-    def __init__(self):
-        if not self.SUPABASE_JWT_SECRET:
-            raise ValueError("Please set the SUPABASE_JWT_SECRET environment variable")
 
-
-AuthApiSettings = AuthApiSettings()
+AuthApiSettings: AuthApiSettings = AuthApiSettings()
