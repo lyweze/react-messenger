@@ -5,7 +5,7 @@ from pydantic import BaseModel
 
 
 class CreateChatRequest(BaseModel):
-    recipient_user_id: str # это юзернейм
+    recipient_user_id: str  # это юзернейм
 
 
 class CreateChatResponse(BaseModel):

@@ -54,7 +54,9 @@ async def create_new_chat(user1_id: str, user2_id: str) -> str:
             "created_at": user1_id,
         }
         chat_results = (
-            SupabaseConfig.supabase.table(SupabaseConfig.table_chats_name).insert(chat_data).execute()
+            SupabaseConfig.supabase.table(SupabaseConfig.table_chats_name)
+            .insert(chat_data)
+            .execute()
         )
         if not chat_results:
             raise Exception("Failed to create chat between users")

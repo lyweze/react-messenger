@@ -1,7 +1,7 @@
 import os
 
-from supabase import Client, create_client
 from dotenv import load_dotenv
+from supabase import Client, create_client
 
 load_dotenv()
 
@@ -15,5 +15,6 @@ class SupabaseConfig:
     table_profiles_name = os.getenv("SUPABASE_TABLE_PROFILES_NAME")
 
     get_chat_participants_uuid_fun = os.getenv("SUPABASE_GET_CHAT_PARTICIPANTS_UUID")
+
 
 SupabaseConfig = SupabaseConfig()
