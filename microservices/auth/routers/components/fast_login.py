@@ -2,7 +2,7 @@ from typing import Any
 
 from fastapi import APIRouter, Depends
 
-from microservices.auth.utilities.dependencies import get_current_user
+from microservices.utilities.dependencies import get_current_user
 
 router: APIRouter = APIRouter()
 
