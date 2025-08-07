@@ -16,8 +16,7 @@
 - ⚡ Использует React и современный JavaScript
 
 ## Демо
-
-> _Если есть демо-версия, добавьте ссылку здесь._
+![Only for prewiev](https://lyweze.github.io/react-messenger/)
 
 ## Быстрый старт
 
